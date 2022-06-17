@@ -2,6 +2,9 @@ https://miro.com/app/board/uXjVOsItOtU=/?share_link_id=234241948529
 
 Clone of We-Wordle
 
+![](Wireframe.png)
+![](info.png)
+
 Two players take turns guessing wordle 5 letter words
 
 Your task (like that of your opponent) is to find out the hidden word - it is the same for both of you.
