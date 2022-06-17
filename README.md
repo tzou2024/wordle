@@ -12,7 +12,7 @@ If the word is not a word in the english languash, the word doesn't register and
 
 🟩 The green color of the letter means that there is such a letter in the hidden word and is located in the same place. 🟨 The yellow color of the letter means that the hidden word has such a letter, but is located in a different place (perhaps more than once). ⬜ The gray color of the letter means that this letter is not in the hidden word. The number of moves is not limited, players enter words until they guess the hidden word.
 
-WHeoever guesses the word first wins!
+Whoever guesses the word first wins!
 
 MVP-Unlimited Guesses
 
