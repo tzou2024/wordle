@@ -25,6 +25,7 @@ The game has a timer - 15 seconds are given for each move. If you do not have ti
 
 Score Tracker
 
+Add keyboard
 --------------------------------------------------------
 Game opens to classic wordle template
 
@@ -39,3 +40,5 @@ Alt ideas:
 Pachinko 
 
 Piano Tiles
+
+Spelling Bee
