@@ -114,6 +114,7 @@ function gameControl(event, keyLabel){
             if(element > 0){element = element - 1}
             currKey = document.getElementById(row * 5 + element)
             currKey.innerText = ""
+            currKey.style.borderColor = "rgb(160, 160, 167)"
             //console.log("AFTER", element)
             break
         case "ENTER":
@@ -127,6 +128,7 @@ function gameControl(event, keyLabel){
             }
             else{
             currKey = document.getElementById(row * 5 + element)
+            currKey.style.borderColor = "black"
             currKey.innerText = keyLabel
             element = element + 1
             }
