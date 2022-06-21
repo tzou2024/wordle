@@ -64,7 +64,7 @@ function generateKeyboard(){
         keyButton.classList.add('key')
         keyButton.addEventListener('click', () =>{
             //console.log(keyButton.id)
-            gameControl(keyButton.id)
+            gameControl(event, keyButton.id)
         })
         keyRow.appendChild(keyButton)
         })
@@ -102,22 +102,35 @@ function startSequence() {
     keyLog()
 }
 
-function gameControl(keyLabel){
+function checkWord(){
+
+}
+
+function gameControl(event, keyLabel){
     let currKey
-    console.log(currKey)
+    //console.log(currKey)
     switch(keyLabel){
         case "BACK":
             if(element > 0){element = element - 1}
             currKey = document.getElementById(row * 5 + element)
             currKey.innerText = ""
-            console.log("AFTER", element)
-            
+            //console.log("AFTER", element)
             break
+        case "ENTER":
+            checkWord()
+            console.log(checkWord)
+            break
+            
         default:
+            if(element > 4){
+                break
+            }
+            else{
             currKey = document.getElementById(row * 5 + element)
             currKey.innerText = keyLabel
             element = element + 1
-            console.log("AFTER", element)
+            }
+           // console.log("AFTER", element)
     }
 }
 
