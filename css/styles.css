@@ -51,7 +51,7 @@ body {
 }
   
 #board {
-    margin-top: 50px;
+    margin-top: 0px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
@@ -107,8 +107,8 @@ body {
     margin-bottom: 5px;
 }
 
-#back{
+#BACK{
     position: relative;
-    top: 6px;
+    top: 7px;
     padding-left: 20px;
     padding-right: 20px;}
