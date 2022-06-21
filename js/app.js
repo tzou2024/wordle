@@ -48,6 +48,7 @@ const keys = [
     'back']
 ]
 
+
 function generateKeyboard(){
     keys.forEach(row => {
         const keyRow = document.createElement('div')
@@ -71,9 +72,30 @@ function generateKeyboard(){
     back.innerHTML = `<i class="material-icons">&#xe14a;</i>`
 }
 
+function keyLog(){
+    document.addEventListener('keypress', (event) => {
+        var name = event.key;
+        keys.forEach(list=>{
+            if(list.includes(name.toUpperCase())){
+                //console.log("Registered")
+                keyboardkey= document.getElementById(`${name.toUpperCase()}`)
+                //console.log(keyboardkey)
+                keyboardkey.click()
+            }
+        })
+      }, false);
+    document.addEventListener('keydown', (event) =>{
+        var name = event.key
+        if (name == 'Backspace'){
+            document.getElementById('back').click()
+        }
+    })
+}
+
 function startSequence() {
     generateBoxes()
     generateKeyboard()
+    keyLog()
 }
 
 
