@@ -65,7 +65,7 @@ body {
     min-height: 70px;
     font-size: 50px;
     font-weight: bold;
-    color: gainsboro;
+    color: rgb(0, 0, 0);
     text-transform: uppercase;
   
     display: flex;
