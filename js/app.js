@@ -4,10 +4,13 @@ const startGameButton = document.getElementById('start-game-button')
 const boardContainer = document.getElementById('board-container')
 const container = document.getElementById('container')
 const keyboardContianer = document.getElementById('keyboard-container')
+const infoContainer = document.getElementById('info-container')
+const scoresContainer = document.getElementById('scores-container')
 const keyboard = document.getElementById('keyboard')
 const info = document.getElementById("info")
 const stats = document.getElementById("stats")
 const reset = document.getElementById("reset")
+const lightning = document.getElementById("lightning")
 
 let word
 
@@ -43,20 +46,21 @@ function getRandomWord(){
         word = result[0].toUpperCase();
         console.log("word is: ", word)
     })
-    
+    setTimeout(()=>{
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
     .then(function(response) {// 2️⃣ 
         if (!response.ok) {// 3️⃣ 
             throw Error(response.statusText);//4️⃣ 
         }
+        console.log("Fetching", word)
         return response.json();
-    }).then(function(response) {f
+    }).then(function(response) {
         console.log(response)
         console.log("All good!")
     }).catch(function(error) { //5️⃣ 
         console.log('404 retry : '+ error);// 6️⃣ 
-        //getRandomWord()
-    });
+        getRandomWord()
+    })}, 500);
 }
 
 
@@ -344,6 +348,7 @@ startGameButton.addEventListener('click',
      titleContainer.style.display = "none"
      keyboardContianer.style.display = "none"
      scoresContainer.style.display = "block"
+     infoContainer.style.display = "none"
      
 
      
@@ -357,15 +362,37 @@ startGameButton.addEventListener('click',
 
  }
 
+
+ function displayInfo(){
+    boardContainer.style.display = "none"
+    titleContainer.style.display = "none"
+    keyboardContianer.style.display = "none"
+    scoresContainer.style.display = "none"
+    infoContainer.style.display = "block"
+    
+
+    
+    let oneScore = document.getElementById("oneScore")
+    let twoScore = document.getElementById("twoScore")
+
+    oneScore.innerText = `Player One Score: ${scores.p1_score}`
+    twoScore.innerText = `Player Two Score: ${scores.p2_score}`
+
+    document.getElementById("info-to-game-button").addEventListener('click',returnToGame)
+
+}
+
  function returnToGame(){
     let scoresContainer = document.getElementById("scores-container")
     scoresContainer.style.display = "none"
     boardContainer.style.display = "flex"
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
+    infoContainer.style.display = "none"
  }
 
  stats.addEventListener('click',displayStats)
+ info.addEventListener('click', displayInfo)
 
 
 

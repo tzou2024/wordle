@@ -78,6 +78,16 @@ font-size: 3rem;
     overflow: hidden;
 }
 
+#info-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+    text-align: center;
+    max-width: 60vw;
+}
+
 #stats{
     font-size: 25px;
     margin-top: 20px;
@@ -89,7 +99,16 @@ font-size: 3rem;
     cursor: crosshair;
 }
 
+#letterc-container{
+    margin-top: 20px;
+    font-size: 25px;
+}
 
+#letterc{
+    height: 25px;
+    width: auto;
+    text-align: center;
+}
 
 .scoredets{
     margin-top: 20px;
@@ -100,8 +119,20 @@ font-size: 3rem;
     cursor: crosshair;
 }
 
+#info-to-game-button{
+    text-decoration: underline;
+    text-align: center;
+    cursor: crosshair;
+    margin-top: 30px;
+}
+
 #info{
     font-size: 25px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.infodets{
     margin-top: 20px;
     margin-left: 20px;
 }
