@@ -161,16 +161,19 @@ function compareWords(guess){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            colorin(checkingKey,"rgb(106,170,100)")
+            setTimeout(colorin,(i+1) * 500,checkingKey,"rgb(106,170,100)")
+            
 
         }
         else if(word.split("").includes(parsedguess[i])){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-           colorin(checkingKey, "rgb(201,180,89)")
+            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(201,180,89)")
+           
         }
         else{
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            colorin(checkingKey, "rgb(120,124,126)")
+            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(120,124,126)")
+            
         }
     }
     row++
