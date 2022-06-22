@@ -89,6 +89,17 @@ font-size: 3rem;
     cursor: crosshair;
 }
 
+
+
+.scoredets{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#score-to-game-button{
+    cursor: crosshair;
+}
+
 #info{
     font-size: 25px;
     margin-top: 20px;

@@ -15,7 +15,7 @@ let row = 0;
 let element = 0;
 
 let lettercount = 5
-let guesscount = 6
+let guessCount = 6
 
 let scores = {
     p1_score: 0,
@@ -41,6 +41,7 @@ function getRandomWord(){
     generateWord().then(function(result) {
         //console.log(result)
         word = result[0].toUpperCase();
+        console.log("word is: ", word)
     })
     
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
@@ -50,6 +51,7 @@ function getRandomWord(){
         }
         return response.json();
     }).then(function(response) {
+        console.log(response)
         console.log("All good!")
     }).catch(function(error) { //5️⃣ 
         console.log('404 retry : '+ error);// 6️⃣ 
@@ -62,7 +64,7 @@ function getRandomWord(){
 
 function generateBoxes() {
     console.log('starting')
-    for(let i=0;i<(lettercount * guesscount);i++){
+    for(let i=0;i<(lettercount * guessCount);i++){
         let box = document.createElement('div')
         box.classList.add('box')
         box.classList.add(`row-${Math.floor(i/lettercount)}`)
@@ -255,7 +257,8 @@ function compareWords(guess){
         else{
             scores.p2_score = scores.p2_score + 1
         }
-        resetBoard()
+        //resetBoard()
+        row = guessCount + 1
     }
 
     scores.p1_turn = !(scores.p1_turn)
@@ -296,6 +299,10 @@ function checkWord(guess){
 
 function gameControl(event, keyLabel){
     let currKey
+    if (row > guessCount){
+        alert("it's over, click reset icon to keep playing")
+        return 0
+    }
     //console.log(currKey)
     switch(keyLabel){
         case "BACK":
@@ -332,13 +339,29 @@ startGameButton.addEventListener('click',
  function displayStats(){
      let scoreBox = document.getElementById("scorebox")
      let scoresContainer = document.getElementById("scores-container")
-     scoresContainer.style.display = "block"
      boardContainer.style.display = "none"
      titleContainer.style.display = "none"
      keyboardContianer.style.display = "none"
-     
+     scoresContainer.style.display = "block"
      
 
+     
+     let oneScore = document.getElementById("oneScore")
+     let twoScore = document.getElementById("twoScore")
+
+     oneScore.innerText = `Player One Score: ${scores.p1_score}`
+     twoScore.innerText = `Player Two Score: ${scores.p2_score}`
+
+     document.getElementById("score-to-game-button").addEventListener('click',returnToGame)
+
+ }
+
+ function returnToGame(){
+    let scoresContainer = document.getElementById("scores-container")
+    scoresContainer.style.display = "none"
+    boardContainer.style.display = "flex"
+    titleContainer.style.display = "block"
+    keyboardContianer.style.display = "block"
  }
 
  stats.addEventListener('click',displayStats)
