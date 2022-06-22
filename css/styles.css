@@ -8,6 +8,10 @@ body {
     font-family: 'Nunito', sans-serif;;
 }
 
+h1{
+font-size: 3rem;
+}
+
 #container{
      align-items: center;
      align-content: center;
@@ -27,6 +31,22 @@ body {
 
 #start-game-button:hover{
     font-size: 33px;
+}
+
+#scores-container{
+    display:none;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.scoredets{
+    text-align: center;
+}
+
+#score-to-game-button{
+    text-decoration: underline;
 }
 
 #title-container{
@@ -88,6 +108,19 @@ body {
 
 #reset:hover{
     color: gray;
+    cursor: crosshair;
+}
+
+#lightning{
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    float: right;
+}
+
+#lightning:hover{
+    color: grey;
     cursor: crosshair;
 }
 

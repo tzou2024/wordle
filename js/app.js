@@ -1,6 +1,7 @@
 const board = document.getElementById('board')
 const titleContainer = document.getElementById('title-container')
 const startGameButton = document.getElementById('start-game-button')
+const boardContainer = document.getElementById('board-container')
 const container = document.getElementById('container')
 const keyboardContianer = document.getElementById('keyboard-container')
 const keyboard = document.getElementById('keyboard')
@@ -328,6 +329,19 @@ startGameButton.addEventListener('click',
 
  )
 
+ function displayStats(){
+     let scoreBox = document.getElementById("scorebox")
+     let scoresContainer = document.getElementById("scores-container")
+     scoresContainer.style.display = "block"
+     boardContainer.style.display = "none"
+     titleContainer.style.display = "none"
+     keyboardContianer.style.display = "none"
+     
+     
+
+ }
+
+ stats.addEventListener('click',displayStats)
 
 
 
