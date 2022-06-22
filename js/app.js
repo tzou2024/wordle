@@ -30,6 +30,19 @@ function getRandomWord(){
         //console.log(result)
         word = result[0].toUpperCase();
     })
+    
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
+    .then(function(response) {// 2️⃣ 
+        if (!response.ok) {// 3️⃣ 
+            throw Error(response.statusText);//4️⃣ 
+        }
+        return response.json();
+    }).then(function(response) {
+        console.log("All good!")
+    }).catch(function(error) { //5️⃣ 
+        console.log('404 retry : '+ error);// 6️⃣ 
+        getRandomWord()
+    });
 }
 
 
