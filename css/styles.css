@@ -31,7 +31,8 @@ body {
 
 #title-container{
 
-    margin-top: 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     align-items: stretch;
     justify-content: center;
 }
@@ -48,6 +49,11 @@ body {
     align-items: center;
     flex-grow: 1;
     overflow: hidden;
+}
+
+.fa-info-circle{
+    margin-top: 10px;
+    margin-left: 10px;
 }
   
 #board {
