@@ -50,12 +50,12 @@ function getRandomWord(){
             throw Error(response.statusText);//4️⃣ 
         }
         return response.json();
-    }).then(function(response) {
+    }).then(function(response) {f
         console.log(response)
         console.log("All good!")
     }).catch(function(error) { //5️⃣ 
         console.log('404 retry : '+ error);// 6️⃣ 
-        getRandomWord()
+        //getRandomWord()
     });
 }
 
@@ -259,10 +259,11 @@ function compareWords(guess){
         }
         //resetBoard()
         row = guessCount + 1
+        scores.p1_turn = !(scores.p1_turn)
     }
 
     scores.p1_turn = !(scores.p1_turn)
-    setTimeout(updatePlayer,(parsedguess.length+1) * 500)
+    setTimeout(updatePlayer,(parsedguess.length+1) * 550)
     row++
     element = 0
     
