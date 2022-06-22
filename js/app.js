@@ -24,6 +24,7 @@ let scores = {
 
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
+    alert("not a word!")
 }
 
 
@@ -286,7 +287,8 @@ function checkWord(guess){
        // console.log(response)
         //console.log('200 - ok');
     }).catch(function(error) { //5️⃣ 
-        console.log('404 Not Found : '+ error);// 6️⃣ 
+        console.log('404 Not Found : '+ error);// 6️⃣
+        onWordCatchFailure()
     });
 }
 }
