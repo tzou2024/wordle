@@ -12,6 +12,12 @@ let element = 0;
 let lettercount = 5
 let guesscount = 6
 
+let scores = {
+    p1_score: 0,
+    p2_score: 0,
+    p1_turn: true
+}
+
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
 }
@@ -136,11 +142,34 @@ function keyLog(){
     })
 }
 
+
+function showPlayer(){
+    let p1 =  document.getElementById("player1")
+    let p2 =  document.getElementById("player2")
+    p1.style.display = "block"
+    p2.style.display = "block"
+}
+
+function updatePlayer(){
+    let p1 =  document.getElementById("player1")
+    let p2 =  document.getElementById("player2")
+    if (scores.p1_turn){
+        p1.style.color = "black"
+        p2.style.color = "bisque"
+    }
+    else{
+        p2.style.color = "black"
+        p1.style.color = "bisque"
+    }
+}
+
 function startSequence() {
     generateBoxes()
     generateKeyboard()
     keyLog()
     getRandomWord()
+    showPlayer()
+    updatePlayer()
 }
 
 function collectGuess(){
@@ -189,6 +218,8 @@ function compareWords(guess){
             
         }
     }
+    scores.p1_turn = !(scores.p1_turn)
+    setTimeout(updatePlayer,(parsedguess.length+1) * 500)
     row++
     element = 0
     
@@ -254,6 +285,7 @@ function gameControl(event, keyLabel){
 
 startGameButton.addEventListener('click',
     startSequence
+
  )
 
 
