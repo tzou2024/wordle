@@ -16,23 +16,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/styles.css">
         <script src="js/app.js" async defer></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <i class="fa fa-info-circle" id="info"></i>
+        <i class="fa fa-bar-chart" id = "stats"></i>
+        <i class="fa fa-refresh fa-spin"id="reset"></i>
+        <i class="fa fa-bolt" id="lightning"aria-hidden="true"></i>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div id="container">
+            <div id="scores-container">
+                <h1 class="scoredets">Scores!</h1>
+                <div class="scoredets" id="scorebox">
+                    <h2 class="scoredets" id="oneScore"></h2>
+                    <h2 class="scoredets" id="twoScore"></h2>
+                </div>
+                <h2 class="scoredets"id="score-to-game-button">Back To Game</h2>
+            </div>
             <div id="title-container">
                 <h1 id="title">Wordle</h1>
                 <h2 id="start-game-button">Start Game</h2>
             </div>
             <div id="board-container">
-
+                <h3 class="turn-Counter" id = "player1">Player One</h3>
                 <div id="board">
                     
 
                 </div>
-
+                <h3 class="turn-Counter"id = "player2">Player Two</h3>
             </div>
             <div id="keyboard-container">
                 <div id="keyboard">

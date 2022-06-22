@@ -1,19 +1,31 @@
 const board = document.getElementById('board')
 const titleContainer = document.getElementById('title-container')
 const startGameButton = document.getElementById('start-game-button')
+const boardContainer = document.getElementById('board-container')
 const container = document.getElementById('container')
 const keyboardContianer = document.getElementById('keyboard-container')
 const keyboard = document.getElementById('keyboard')
+const info = document.getElementById("info")
+const stats = document.getElementById("stats")
+const reset = document.getElementById("reset")
+
 let word
 
 let row = 0;
 let element = 0;
 
 let lettercount = 5
-let guesscount = 6
+let guessCount = 6
+
+let scores = {
+    p1_score: 0,
+    p2_score: 0,
+    p1_turn: true
+}
 
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
+    alert("not a word!")
 }
 
 
@@ -29,7 +41,22 @@ function getRandomWord(){
     generateWord().then(function(result) {
         //console.log(result)
         word = result[0].toUpperCase();
+        console.log("word is: ", word)
     })
+    
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
+    .then(function(response) {// 2️⃣ 
+        if (!response.ok) {// 3️⃣ 
+            throw Error(response.statusText);//4️⃣ 
+        }
+        return response.json();
+    }).then(function(response) {
+        console.log(response)
+        console.log("All good!")
+    }).catch(function(error) { //5️⃣ 
+        console.log('404 retry : '+ error);// 6️⃣ 
+        getRandomWord()
+    });
 }
 
 
@@ -37,7 +64,7 @@ function getRandomWord(){
 
 function generateBoxes() {
     console.log('starting')
-    for(let i=0;i<(lettercount * guesscount);i++){
+    for(let i=0;i<(lettercount * guessCount);i++){
         let box = document.createElement('div')
         box.classList.add('box')
         box.classList.add(`row-${Math.floor(i/lettercount)}`)
@@ -123,11 +150,34 @@ function keyLog(){
     })
 }
 
+
+function showPlayer(){
+    let p1 =  document.getElementById("player1")
+    let p2 =  document.getElementById("player2")
+    p1.style.display = "block"
+    p2.style.display = "block"
+}
+
+function updatePlayer(){
+    let p1 =  document.getElementById("player1")
+    let p2 =  document.getElementById("player2")
+    if (scores.p1_turn){
+        p1.style.color = "black"
+        p2.style.color = "bisque"
+    }
+    else{
+        p2.style.color = "black"
+        p1.style.color = "bisque"
+    }
+}
+
 function startSequence() {
     generateBoxes()
     generateKeyboard()
     keyLog()
     getRandomWord()
+    showPlayer()
+    updatePlayer()
 }
 
 function collectGuess(){
@@ -141,35 +191,78 @@ function collectGuess(){
 }
 
 function notEnoughLetters(){
-    console.log("Not Enough Letters")
+    alert("Not enough letters")
 }
+
+function colorin(element,color){
+    element.style.backgroundColor = color
+    element.style.color = "white"
+    element.style.borderStyle = "hidden"
+    let buttoner = document.getElementById(`${element.innerText}`)
+    buttoner.style.backgroundColor = color
+    buttoner.style.color = "white"
+
+}
+
+function resetBoard(){
+    let boxes = document.getElementsByClassName("box")
+    for (box of boxes){
+        box.innerText = ""
+        box.style.color= "rgb(0, 0, 0)"
+        box.style.border = "3px solid rgb(160, 160, 167)"
+        box.style.backgroundColor = "rgba(0, 0, 0, 0.0)"
+    }
+
+    let keys = document.getElementsByClassName("key")
+    for(key of keys){
+        key.style.backgroundColor = "#D3D6DA"
+        key.style.color = "black"
+    }
+    row = 0
+    element = 0
+    getRandomWord()
+}
+
+reset.addEventListener('click', resetBoard)
 
 function compareWords(guess){
     console.log(guess[0].word.toUpperCase())
     let parsedguess = guess[0].word.toUpperCase()
+    let checkcorrect = 0;
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "green"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
+            setTimeout(colorin,(i+1) * 500,checkingKey,"rgb(106,170,100)")
+            checkcorrect = checkcorrect + 1
+            
 
         }
         else if(word.split("").includes(parsedguess[i])){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "yellow"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
+            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(201,180,89)")
+           
         }
         else{
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "red"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
-
+            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(120,124,126)")
+            
         }
     }
+
+    if (checkcorrect == parsedguess.length){
+        if(scores.p1_turn){
+            scores.p1_score = scores.p1_score + 1
+        }
+        else{
+            scores.p2_score = scores.p2_score + 1
+        }
+        //resetBoard()
+        row = guessCount + 1
+    }
+
+    scores.p1_turn = !(scores.p1_turn)
+    setTimeout(updatePlayer,(parsedguess.length+1) * 500)
     row++
     element = 0
     
@@ -198,13 +291,18 @@ function checkWord(guess){
        // console.log(response)
         //console.log('200 - ok');
     }).catch(function(error) { //5️⃣ 
-        console.log('404 Not Found : '+ error);// 6️⃣ 
+        console.log('404 Not Found : '+ error);// 6️⃣
+        onWordCatchFailure()
     });
 }
 }
 
 function gameControl(event, keyLabel){
     let currKey
+    if (row > guessCount){
+        alert("it's over, click reset icon to keep playing")
+        return 0
+    }
     //console.log(currKey)
     switch(keyLabel){
         case "BACK":
@@ -235,8 +333,38 @@ function gameControl(event, keyLabel){
 
 startGameButton.addEventListener('click',
     startSequence
+
  )
 
+ function displayStats(){
+     let scoreBox = document.getElementById("scorebox")
+     let scoresContainer = document.getElementById("scores-container")
+     boardContainer.style.display = "none"
+     titleContainer.style.display = "none"
+     keyboardContianer.style.display = "none"
+     scoresContainer.style.display = "block"
+     
+
+     
+     let oneScore = document.getElementById("oneScore")
+     let twoScore = document.getElementById("twoScore")
+
+     oneScore.innerText = `Player One Score: ${scores.p1_score}`
+     twoScore.innerText = `Player Two Score: ${scores.p2_score}`
+
+     document.getElementById("score-to-game-button").addEventListener('click',returnToGame)
+
+ }
+
+ function returnToGame(){
+    let scoresContainer = document.getElementById("scores-container")
+    scoresContainer.style.display = "none"
+    boardContainer.style.display = "flex"
+    titleContainer.style.display = "block"
+    keyboardContianer.style.display = "block"
+ }
+
+ stats.addEventListener('click',displayStats)
 
 
 
