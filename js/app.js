@@ -4,6 +4,10 @@ const startGameButton = document.getElementById('start-game-button')
 const container = document.getElementById('container')
 const keyboardContianer = document.getElementById('keyboard-container')
 const keyboard = document.getElementById('keyboard')
+const info = document.getElementById("info")
+const stats = document.getElementById("stats")
+const reset = document.getElementById("reset")
+
 let word
 
 let row = 0;
@@ -196,14 +200,37 @@ function colorin(element,color){
 
 }
 
+function resetBoard(){
+    let boxes = document.getElementsByClassName("box")
+    for (box of boxes){
+        box.innerText = ""
+        box.style.color= "rgb(0, 0, 0)"
+        box.style.border = "3px solid rgb(160, 160, 167)"
+        box.style.backgroundColor = "rgba(0, 0, 0, 0.0)"
+    }
+
+    let keys = document.getElementsByClassName("key")
+    for(key of keys){
+        key.style.backgroundColor = "#D3D6DA"
+        key.style.color = "black"
+    }
+    row = 0
+    element = 0
+    getRandomWord()
+}
+
+reset.addEventListener('click', resetBoard)
+
 function compareWords(guess){
     console.log(guess[0].word.toUpperCase())
     let parsedguess = guess[0].word.toUpperCase()
+    let checkcorrect = 0;
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
             setTimeout(colorin,(i+1) * 500,checkingKey,"rgb(106,170,100)")
+            checkcorrect = checkcorrect + 1
             
 
         }
@@ -218,6 +245,17 @@ function compareWords(guess){
             
         }
     }
+
+    if (checkcorrect == parsedguess.length){
+        if(scores.p1_turn){
+            scores.p1_score = scores.p1_score + 1
+        }
+        else{
+            scores.p2_score = scores.p2_score + 1
+        }
+        resetBoard()
+    }
+
     scores.p1_turn = !(scores.p1_turn)
     setTimeout(updatePlayer,(parsedguess.length+1) * 500)
     row++

@@ -22,7 +22,7 @@ body {
     font-size: 30px;
     text-decoration: underline;
     text-align: center;
-    cursor: pointer;
+    cursor: crosshair;
 }
 
 #start-game-button:hover{
@@ -58,10 +58,39 @@ body {
     overflow: hidden;
 }
 
-.fa{
-    margin-top: 10px;
+#stats{
+    font-size: 25px;
+    margin-top: 20px;
     margin-left: 20px;
 }
+
+#stats:hover{
+    color: gray;
+    cursor: crosshair;
+}
+
+#info{
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#info:hover{
+    color: gray;
+    cursor: crosshair;
+}
+
+#reset{
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#reset:hover{
+    color: gray;
+    cursor: crosshair;
+}
+
   
 #board {
     margin-top: 0px;
