@@ -141,7 +141,17 @@ function collectGuess(){
 }
 
 function notEnoughLetters(){
-    console.log("Not Enough Letters")
+    alert("Not enough letters")
+}
+
+function colorin(element,color){
+    element.style.backgroundColor = color
+    element.style.color = "white"
+    element.style.borderStyle = "hidden"
+    let buttoner = document.getElementById(`${element.innerText}`)
+    buttoner.style.backgroundColor = color
+    buttoner.style.color = "white"
+
 }
 
 function compareWords(guess){
@@ -151,23 +161,16 @@ function compareWords(guess){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "green"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
+            colorin(checkingKey,"rgb(106,170,100)")
 
         }
         else if(word.split("").includes(parsedguess[i])){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "yellow"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
+           colorin(checkingKey, "rgb(201,180,89)")
         }
         else{
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            checkingKey.style.backgroundColor = "red"
-            checkingKey.style.color = "white"
-            checkingKey.style.borderStyle = "hidden"
-
+            colorin(checkingKey, "rgb(120,124,126)")
         }
     }
     row++
