@@ -4,15 +4,27 @@ const startGameButton = document.getElementById('start-game-button')
 const boardContainer = document.getElementById('board-container')
 const container = document.getElementById('container')
 const keyboardContianer = document.getElementById('keyboard-container')
+const infoContainer = document.getElementById('info-container')
+const scoresContainer = document.getElementById('scores-container')
 const keyboard = document.getElementById('keyboard')
 const info = document.getElementById("info")
 const stats = document.getElementById("stats")
 const reset = document.getElementById("reset")
+const lightning = document.getElementById("lightning")
+const timeyContainer = document.getElementById("timeycontainer")
+const slideandstart = document.getElementById("slideandstart")
+const slidey = document.getElementById("slidey")
+
+
+
 
 let word
 
+let timestart = 30;
+let timeyflag = false;
 let row = 0;
 let element = 0;
+let intervalCount;
 
 let lettercount = 5
 let guessCount = 6
@@ -21,6 +33,12 @@ let scores = {
     p1_score: 0,
     p2_score: 0,
     p1_turn: true
+}
+
+slidey.oninput = function(){
+    lettercount = this.value 
+    document.documentElement.style
+    .setProperty('--main-setup', `repeat(${lettercount}, 1fr)`);
 }
 
 function onWordCatchFailure(){
@@ -43,12 +61,13 @@ function getRandomWord(){
         word = result[0].toUpperCase();
         console.log("word is: ", word)
     })
-    
+    setTimeout(()=>{
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
     .then(function(response) {// 2️⃣ 
         if (!response.ok) {// 3️⃣ 
             throw Error(response.statusText);//4️⃣ 
         }
+        console.log("Fetching", word)
         return response.json();
     }).then(function(response) {
         console.log(response)
@@ -56,7 +75,7 @@ function getRandomWord(){
     }).catch(function(error) { //5️⃣ 
         console.log('404 retry : '+ error);// 6️⃣ 
         getRandomWord()
-    });
+    })}, 500);
 }
 
 
@@ -71,7 +90,7 @@ function generateBoxes() {
         box.setAttribute('id',`${i}`)
         board.appendChild(box)
     }
-    startGameButton.style.display = "none"
+    slideandstart.style.display = "none"
     container.style.height = "100%"
 }
 const keys = [
@@ -221,6 +240,12 @@ function resetBoard(){
     row = 0
     element = 0
     getRandomWord()
+    stopCountdown()
+    if(timeyflag){
+        timeyflag = !timeyflag
+        stressin()
+    }
+    
 }
 
 reset.addEventListener('click', resetBoard)
@@ -259,12 +284,22 @@ function compareWords(guess){
         }
         //resetBoard()
         row = guessCount + 1
+        scores.p1_turn = !(scores.p1_turn)
+        clearInterval(intervalCount)
     }
 
     scores.p1_turn = !(scores.p1_turn)
-    setTimeout(updatePlayer,(parsedguess.length+1) * 500)
-    row++
+    setTimeout(updatePlayer,(parsedguess.length+1) * 520)
+    ++row
+    setTimeout(()=>{timestart = 30},(parsedguess.length+1) * 520)
     element = 0
+    if(row >= guessCount){
+        
+        setTimeout(()=>{
+            stopCountdown()
+            alert("Round Over! Reset")
+        },(parsedguess.length+1) * 520)
+    }
     
 }
 
@@ -298,6 +333,7 @@ function checkWord(guess){
 }
 
 function gameControl(event, keyLabel){
+
     let currKey
     if (row > guessCount){
         alert("it's over, click reset icon to keep playing")
@@ -318,7 +354,7 @@ function gameControl(event, keyLabel){
             break
             
         default:
-            if(element > 4){
+            if(element > lettercount - 1){
                 break
             }
             else{
@@ -343,6 +379,9 @@ startGameButton.addEventListener('click',
      titleContainer.style.display = "none"
      keyboardContianer.style.display = "none"
      scoresContainer.style.display = "block"
+     infoContainer.style.display = "none"
+     timeyContainer.style.display = "none"
+     slideandstart.style.display = "none"
      
 
      
@@ -356,15 +395,83 @@ startGameButton.addEventListener('click',
 
  }
 
+
+ function displayInfo(){
+    boardContainer.style.display = "none"
+    titleContainer.style.display = "none"
+    keyboardContianer.style.display = "none"
+    scoresContainer.style.display = "none"
+    infoContainer.style.display = "block"
+    timeyContainer.style.display = "none"
+    slideandstart.style.display = "none"
+    
+
+    
+    let oneScore = document.getElementById("oneScore")
+    let twoScore = document.getElementById("twoScore")
+
+    oneScore.innerText = `Player One Score: ${scores.p1_score}`
+    twoScore.innerText = `Player Two Score: ${scores.p2_score}`
+
+    document.getElementById("info-to-game-button").addEventListener('click',returnToGame)
+
+}
+
  function returnToGame(){
+    if(timeyflag){
+        timeyContainer.style.display="block"
+    }
     let scoresContainer = document.getElementById("scores-container")
     scoresContainer.style.display = "none"
     boardContainer.style.display = "flex"
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
+    infoContainer.style.display = "none"
  }
 
- stats.addEventListener('click',displayStats)
+
+
+ function stressin(){
+     let timestart = 30
+    timeyflag = !timeyflag
+    if(timeyflag){
+        startCountdown()
+        timeyContainer.style.display = "block"
+        intervalCount = setInterval(startCountdown, 1000)
+    }
+    else{
+        timeyContainer.style.display = "none"
+        stopCountdown()
+    }
+
+    
+ }
+
+ function stopCountdown(){
+     if(intervalCount){
+        clearInterval(intervalCount)
+     }
+     
+     timestart = 30
+ }
+
+ function startCountdown(){
+    document.getElementById("timeface").innerText = `time: ${timestart}`
+     
+     if(timestart == 0){
+         alert("tooslow!")
+         scores.p1_turn = !scores.p1_turn 
+        updatePlayer()
+        timestart = 30
+     }
+     timestart = timestart - 1
+     
+    
+ }
+
+lightning .addEventListener('click', stressin)
+stats.addEventListener('click',displayStats)
+info.addEventListener('click', displayInfo)
 
 
 

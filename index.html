@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!<![endif]-->
 <html>
     <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,11 +35,55 @@
                 </div>
                 <h2 class="scoredets"id="score-to-game-button">Back To Game</h2>
             </div>
+            <div class="infodets" id="info-container">
+                <h1 class="infodets" >Goal:</h1>
+                <h2 class="infodets" >
+                    Two players take turns guessing 5 letter words. Turn is incidated on each side of the game board.Each player's task is to find the hidden word. If a player guesses the word, they get a point. If neither player guesses by the guess limit, both loose out on that point. Whichever player wins the point goes first next round.
+
+                </h2>
+                <h1 class="infodets" >Each turn:</h1>
+                <h2 class="infodets" >
+                    Enter a real 5-letter word. If the word is not in the dictionary it won't register. After entering a valid word, the letters will change color and give you (and your opponent) a hint for each letter you guessed.
+                </h2>
+                <h2 class="infodets" >
+                    🟩: The letter is in the hidden word and is also positioned correctly within the word.
+                </h2>
+                <h2 class="infodets" >
+                    🟨: The letter is in the hidden word, but not in the right place.
+                </h2>
+                <h2 class="infodets" >
+                    ⬜: The letter is not in the hidden word.
+                </h2>
+                <h2 class="infodets">
+                    May the best guesser win!
+                </h2>
+                <h1 class="infodets" >Bonuses:</h1>
+                <h2 class="infodets">
+                    Lighting: Put on a little pressure with a turn timer.
+                </h2>
+                <h2 class="infodets">
+                    Slider: Switch up the word length!
+                </h2>
+                <h2 class="infodets"id="info-to-game-button">Back To Game</h2>
+            </div>
             <div id="title-container">
-                <h1 id="title">Wordle</h1>
-                <h2 id="start-game-button">Start Game</h2>
+                <h1 id="title">W||dle</h1>
+
+            </div>
+            <div id="slideandstart">
+                <h2 style="margin-bottom: 20px;">Letter Count</h2>
+                <output>3</output>
+                <input type="range" value="5" min="3" max="7" id="slidey"oninput="this.nextElementSibling.value = this.value">
+                <output>7</output>
+                    <h2 id="start-game-button">Start Game</h2>
+                </div>
+            </div>
+           
+            <div id="timeycontainer">
+                <h2 id="timeface">timer</h2>
             </div>
             <div id="board-container">
+                
                 <h3 class="turn-Counter" id = "player1">Player One</h3>
                 <div id="board">
                     
