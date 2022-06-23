@@ -14,7 +14,7 @@ const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
 const slideandstart = document.getElementById("slideandstart")
 const slidey = document.getElementById("slidey")
-var key = config.XRapidAPIKey
+const key = config.XRapidAPIKey
 
 
 
