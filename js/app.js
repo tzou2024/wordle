@@ -390,8 +390,8 @@ startGameButton.addEventListener('click',
      let oneScore = document.getElementById("oneScore")
      let twoScore = document.getElementById("twoScore")
 
-     oneScore.innerText = `Player One Score: ${scores.p1_score}`
-     twoScore.innerText = `Player Two Score: ${scores.p2_score}`
+     oneScore.innerText = `Player One: ${scores.p1_score}`
+     twoScore.innerText = `Player Two: ${scores.p2_score}`
 
      document.getElementById("score-to-game-button").addEventListener('click',returnToGame)
 
