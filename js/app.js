@@ -241,9 +241,9 @@ function resetBoard(){
     }
 
     let keys = document.getElementsByClassName("key")
-    for(key of keys){
-        key.style.backgroundColor = "#D3D6DA"
-        key.style.color = "black"
+    for(keyf of keys){
+        keyf.style.backgroundColor = "#D3D6DA"
+        keyf.style.color = "black"
     }
     row = 0
     element = 0
