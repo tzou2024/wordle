@@ -20,8 +20,9 @@ var key = config.XRapidAPIKey
 
 
 let word
+let timeInit = 20;
 
-let timestart = 30;
+let time = timeInit;
 let timeyflag = false;
 let startflag = false;
 let row = 0;
@@ -201,6 +202,9 @@ function startSequence() {
     showPlayer()
     updatePlayer()
     startflag = true;
+    lightning.style.display = "inline-block"
+    reset.style.display = "inline-block"
+    stats.style.display = "inline-block"
 }
 
 function collectGuess(){
@@ -298,7 +302,7 @@ function compareWords(guess){
     scores.p1_turn = !(scores.p1_turn)
     setTimeout(updatePlayer,(parsedguess.length+1) * 520)
     ++row
-    setTimeout(()=>{timestart = 30},(parsedguess.length+1) * 520)
+    setTimeout(()=>{time = timeInit},(parsedguess.length+1) * 520)
     element = 0
     if(row >= guessCount){
         
@@ -440,7 +444,7 @@ startGameButton.addEventListener('click',
 
 
  function stressin(){
-     let timestart = 30
+     let time = timeInit
     timeyflag = !timeyflag
     if(timeyflag){
         startCountdown()
@@ -460,19 +464,19 @@ startGameButton.addEventListener('click',
         clearInterval(intervalCount)
      }
      
-     timestart = 30
+     time = timeInit
  }
 
  function startCountdown(){
-    document.getElementById("timeface").innerText = `time: ${timestart}`
+    document.getElementById("timeface").innerText = `time: ${time}`
      
-     if(timestart == 0){
+     if(time == 0){
          alert("tooslow!")
          scores.p1_turn = !scores.p1_turn 
         updatePlayer()
-        timestart = 30
+        time = timeInit
      }
-     timestart = timestart - 1
+     time = time - 1
      
     
  }

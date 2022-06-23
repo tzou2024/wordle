@@ -98,6 +98,7 @@ font-size: 3rem;
     font-size: 25px;
     margin-top: 20px;
     margin-left: 20px;
+    display: none;
 }
 
 #stats:hover{
@@ -152,6 +153,7 @@ font-size: 3rem;
     font-size: 25px;
     margin-top: 20px;
     margin-left: 20px;
+    display: none;
 }
 
 #reset:hover{
@@ -165,6 +167,7 @@ font-size: 3rem;
     margin-left: 20px;
     margin-right: 20px;
     float: right;
+    display: none;
 }
 
 #lightning:hover{
