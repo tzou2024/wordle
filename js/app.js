@@ -22,6 +22,7 @@ let word
 
 let timestart = 30;
 let timeyflag = false;
+let startflag = false;
 let row = 0;
 let element = 0;
 let intervalCount;
@@ -197,6 +198,7 @@ function startSequence() {
     getRandomWord()
     showPlayer()
     updatePlayer()
+    startflag = true;
 }
 
 function collectGuess(){
@@ -427,6 +429,9 @@ startGameButton.addEventListener('click',
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
     infoContainer.style.display = "none"
+    if(!startflag){
+        slideandstart.style.display = "block"
+    }
  }
 
 
