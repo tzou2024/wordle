@@ -381,6 +381,7 @@ startGameButton.addEventListener('click',
      scoresContainer.style.display = "block"
      infoContainer.style.display = "none"
      timeyContainer.style.display = "none"
+     slideandstart.style.display = "none"
      
 
      
@@ -402,6 +403,7 @@ startGameButton.addEventListener('click',
     scoresContainer.style.display = "none"
     infoContainer.style.display = "block"
     timeyContainer.style.display = "none"
+    slideandstart.style.display = "none"
     
 
     
