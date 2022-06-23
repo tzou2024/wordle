@@ -202,7 +202,7 @@ function startSequence() {
     generateBoxes()
     generateKeyboard()
     keyLog()
-    getRandomWord()
+    //getRandomWord()
     showPlayer()
     updatePlayer()
     startflag = true;
