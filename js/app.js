@@ -204,7 +204,7 @@ function startSequence() {
     generateBoxes()
     generateKeyboard()
     keyLog()
-    //getRandomWord()
+    getRandomWord()
     showPlayer()
     updatePlayer()
     startflag = true;
@@ -379,9 +379,6 @@ function gameControl(event, keyLabel){
                 enterDelayflag = true
                 let guess = collectGuess()
                 checkWord(guess)
-                setTimeout(()=>{
-                    enterDelayflag = false
-                }, 1000)
             }
             
             break
