@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
 }
+
+:root {
+    --main-setup: repeat(5, 1fr);
+  }
+  
 body {
     height: 100%;
     background-color:bisque;
@@ -170,12 +175,16 @@ font-size: 3rem;
 #board {
     margin-top: 0px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: var(--main-setup);
     grid-gap: 10px;
     padding: 10px;
     box-sizing: border-box;
 }
   
+#timeycontainer{
+    text-align: center;
+    display: none;
+}
 .box {
     border: 3px solid rgb(160, 160, 167);
     min-width: 75px;

@@ -11,11 +11,14 @@ const info = document.getElementById("info")
 const stats = document.getElementById("stats")
 const reset = document.getElementById("reset")
 const lightning = document.getElementById("lightning")
-
+const timeyContainer = document.getElementById("timeycontainer")
 let word
 
+let timestart = 30;
+let timeyflag = false;
 let row = 0;
 let element = 0;
+let intervalCount;
 
 let lettercount = 5
 let guessCount = 6
@@ -225,6 +228,12 @@ function resetBoard(){
     row = 0
     element = 0
     getRandomWord()
+    stopCountdown()
+    if(timeyflag){
+        timeyflag = !timeyflag
+        stressin()
+    }
+    
 }
 
 reset.addEventListener('click', resetBoard)
@@ -264,12 +273,21 @@ function compareWords(guess){
         //resetBoard()
         row = guessCount + 1
         scores.p1_turn = !(scores.p1_turn)
+        clearInterval(intervalCount)
     }
 
     scores.p1_turn = !(scores.p1_turn)
-    setTimeout(updatePlayer,(parsedguess.length+1) * 550)
-    row++
+    setTimeout(updatePlayer,(parsedguess.length+1) * 520)
+    ++row
+    setTimeout(()=>{timestart = 30},(parsedguess.length+1) * 520)
     element = 0
+    if(row >= guessCount){
+        
+        setTimeout(()=>{
+            stopCountdown()
+            alert("Round Over! Reset")
+        },(parsedguess.length+1) * 520)
+    }
     
 }
 
@@ -303,6 +321,7 @@ function checkWord(guess){
 }
 
 function gameControl(event, keyLabel){
+
     let currKey
     if (row > guessCount){
         alert("it's over, click reset icon to keep playing")
@@ -349,6 +368,7 @@ startGameButton.addEventListener('click',
      keyboardContianer.style.display = "none"
      scoresContainer.style.display = "block"
      infoContainer.style.display = "none"
+     timeyContainer.style.display = "none"
      
 
      
@@ -369,6 +389,7 @@ startGameButton.addEventListener('click',
     keyboardContianer.style.display = "none"
     scoresContainer.style.display = "none"
     infoContainer.style.display = "block"
+    timeyContainer.style.display = "none"
     
 
     
@@ -383,6 +404,9 @@ startGameButton.addEventListener('click',
 }
 
  function returnToGame(){
+    if(timeyflag){
+        timeyContainer.style.display="block"
+    }
     let scoresContainer = document.getElementById("scores-container")
     scoresContainer.style.display = "none"
     boardContainer.style.display = "flex"
@@ -391,8 +415,49 @@ startGameButton.addEventListener('click',
     infoContainer.style.display = "none"
  }
 
- stats.addEventListener('click',displayStats)
- info.addEventListener('click', displayInfo)
+
+
+ function stressin(){
+     let timestart = 30
+    timeyflag = !timeyflag
+    if(timeyflag){
+        startCountdown()
+        timeyContainer.style.display = "block"
+        intervalCount = setInterval(startCountdown, 1000)
+    }
+    else{
+        timeyContainer.style.display = "none"
+        stopCountdown()
+    }
+
+    
+ }
+
+ function stopCountdown(){
+     if(intervalCount){
+        clearInterval(intervalCount)
+     }
+     
+     timestart = 30
+ }
+
+ function startCountdown(){
+    document.getElementById("timeface").innerText = `time: ${timestart}`
+     
+     if(timestart == 0){
+         alert("tooslow!")
+         scores.p1_turn = !scores.p1_turn 
+        updatePlayer()
+        timestart = 30
+     }
+     timestart = timestart - 1
+     
+    
+ }
+
+lightning .addEventListener('click', stressin)
+stats.addEventListener('click',displayStats)
+info.addEventListener('click', displayInfo)
 
 
 
