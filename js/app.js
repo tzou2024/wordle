@@ -50,6 +50,8 @@ slidey.oninput = function(){
 
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
+    enterDelayflag = false
+    backspaceDelayflag = false
     alert("not a word!")
 }
 
@@ -222,6 +224,8 @@ function collectGuess(){
 }
 
 function notEnoughLetters(){
+    backspaceDelayflag = false
+    enterDelayflag = false
     alert("Not enough letters")
 }
 
@@ -269,6 +273,10 @@ function compareWords(guess){
     }else{
     let parsedguess = guess.word.toUpperCase()
     let checkcorrect = 0;
+    enterDelayflag = true
+    setTimeout(()=>{
+        enterDelayflag = false
+    }, (parsedguess.length+1) * 520)
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
@@ -298,7 +306,8 @@ function compareWords(guess){
             scores.p2_score = scores.p2_score + 1
         }
         //resetBoard()
-        row = guessCount + 1
+        setTimeout(()=>{row = guessCount + 1}, (parsedguess.length+1) * 520)
+        
         scores.p1_turn = !(scores.p1_turn)
         clearInterval(intervalCount)
     }
@@ -382,10 +391,13 @@ function gameControl(event, keyLabel){
                 break
             }
             else{
-            currKey = document.getElementById(row * lettercount + element)
+                if(!backspaceDelayflag){
+                    currKey = document.getElementById(row * lettercount + element)
             currKey.style.borderColor = "black"
             currKey.innerText = keyLabel
             element = element + 1
+                }
+            
             }
            // console.log("AFTER", element)
     }
