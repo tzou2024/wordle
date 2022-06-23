@@ -1,3 +1,5 @@
+document.body.style.zoom=.8;this.blur();
+
 const board = document.getElementById('board')
 const titleContainer = document.getElementById('title-container')
 const startGameButton = document.getElementById('start-game-button')
@@ -14,13 +16,14 @@ const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
 const slideandstart = document.getElementById("slideandstart")
 const slidey = document.getElementById("slidey")
-var key = config.XRapidAPIKey
+const key = config.XRapidAPIKey
 
 
 
 
 let word
 let timeInit = 20;
+let enterDelayflag = false
 
 let time = timeInit;
 let timeyflag = false;
@@ -241,9 +244,9 @@ function resetBoard(){
     }
 
     let keys = document.getElementsByClassName("key")
-    for(key of keys){
-        key.style.backgroundColor = "#D3D6DA"
-        key.style.color = "black"
+    for(keyf of keys){
+        keyf.style.backgroundColor = "#D3D6DA"
+        keyf.style.color = "black"
     }
     row = 0
     element = 0
@@ -358,8 +361,15 @@ function gameControl(event, keyLabel){
             //console.log("AFTER", element)
             break
         case "ENTER":
-            let guess = collectGuess()
-            checkWord(guess)
+            if(!enterDelayflag){
+                enterDelayflag = true
+                let guess = collectGuess()
+                checkWord(guess)
+                setTimeout(()=>{
+                    enterDelayflag = false
+                }, 1000)
+            }
+            
             break
             
         default:
