@@ -14,6 +14,7 @@ const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
 const slideandstart = document.getElementById("slideandstart")
 const slidey = document.getElementById("slidey")
+var key = config.XRapidAPIKey
 
 
 
@@ -49,34 +50,35 @@ function onWordCatchFailure(){
 
 
 function generateWord() {
-    return fetch(`https://random-word-api.herokuapp.com/word?length=${lettercount}`).then(function(response) {
-        return response.json();
-    }).then(function(json) {
-        return json;
-    });
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'wordle-creator-tools.p.rapidapi.com'
+        }
+    };
+    
+    return fetch(`https://wordle-creator-tools.p.rapidapi.com/new-word?wordlength=${lettercount}`, options)
+    .then(function(response) {
+            return response.json();
+        }).then(function(json) {
+            return json;
+        })
+        .catch(err => console.error(err));
+    // return fetch(`https://random-word-api.herokuapp.com/word?length=${lettercount}`).then(function(response) {
+    //     return response.json();
+    // }).then(function(json) {
+    //     return json;
+    // });
 }
 
 function getRandomWord(){
     generateWord().then(function(result) {
         //console.log(result)
-        word = result[0].toUpperCase();
+        word = result.word.toUpperCase();
         console.log("word is: ", word)
     })
-    setTimeout(()=>{
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`) //1️⃣ 
-    .then(function(response) {// 2️⃣ 
-        if (!response.ok) {// 3️⃣ 
-            throw Error(response.statusText);//4️⃣ 
-        }
-        console.log("Fetching", word)
-        return response.json();
-    }).then(function(response) {
-        console.log(response)
-        console.log("All good!")
-    }).catch(function(error) { //5️⃣ 
-        console.log('404 retry : '+ error);// 6️⃣ 
-        getRandomWord()
-    })}, 500);
+    
 }
 
 
@@ -253,8 +255,11 @@ function resetBoard(){
 reset.addEventListener('click', resetBoard)
 
 function compareWords(guess){
-    console.log(guess[0].word.toUpperCase())
-    let parsedguess = guess[0].word.toUpperCase()
+    console.log("CompareWord guess.word.toUpperCase()",guess.word.toUpperCase())
+    if(guess.result == false){
+        onWordCatchFailure()
+    }else{
+    let parsedguess = guess.word.toUpperCase()
     let checkcorrect = 0;
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
@@ -302,6 +307,7 @@ function compareWords(guess){
             alert("Round Over! Reset")
         },(parsedguess.length+1) * 520)
     }
+}
     
 }
 
@@ -311,26 +317,23 @@ function checkWord(guess){
     }
     else{
 
-    // fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`)
-    // .then(res=>res.json())
-    // .then(data=>{
-    //     console.log(data[0])
-    // })
-
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`) //1️⃣ 
-    .then(function(response) {// 2️⃣ 
-        if (!response.ok) {// 3️⃣ 
-            throw Error(response.statusText);//4️⃣ 
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'wordle-creator-tools.p.rapidapi.com'
         }
-        return response.json();
-    }).then(function(response) {
-        compareWords(response)
-       // console.log(response)
-        //console.log('200 - ok');
-    }).catch(function(error) { //5️⃣ 
-        console.log('404 Not Found : '+ error);// 6️⃣
-        onWordCatchFailure()
-    });
+    };
+    
+    fetch(`https://wordle-creator-tools.p.rapidapi.com/check-word?word=${guess.toLowerCase()}`, options)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response)
+            compareWords(response)})
+        .catch(err => {console.error(err)
+        });
+
+    
 }
 }
 
