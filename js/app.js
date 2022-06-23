@@ -1,3 +1,5 @@
+document.body.style.zoom=.8;this.blur();
+
 const board = document.getElementById('board')
 const titleContainer = document.getElementById('title-container')
 const startGameButton = document.getElementById('start-game-button')
@@ -21,6 +23,7 @@ const key = config.XRapidAPIKey
 
 let word
 let timeInit = 20;
+let enterDelayflag = false
 
 let time = timeInit;
 let timeyflag = false;
@@ -358,8 +361,15 @@ function gameControl(event, keyLabel){
             //console.log("AFTER", element)
             break
         case "ENTER":
-            let guess = collectGuess()
-            checkWord(guess)
+            if(!enterDelayflag){
+                enterDelayflag = true
+                let guess = collectGuess()
+                checkWord(guess)
+                setTimeout(()=>{
+                    enterDelayflag = false
+                }, 1000)
+            }
+            
             break
             
         default:

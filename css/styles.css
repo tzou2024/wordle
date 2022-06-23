@@ -191,8 +191,8 @@ font-size: 3rem;
 }
 .box {
     border: 3px solid rgb(160, 160, 167);
-    min-width: 75px;
-    min-height: 75px;
+    min-width: 70px;
+    min-height: 70px;
     font-size: 50px;
     font-weight: bold;
     color: rgb(0, 0, 0);
