@@ -6,7 +6,7 @@
 :root {
     --main-setup: repeat(5, 1fr);
   }
-  
+
 body {
     height: 100%;
     background-color:bisque;
@@ -72,7 +72,8 @@ font-size: 3rem;
 #title{
     font-weight: bold;
     text-align: center;
-    font-size: 3rem;
+    font-size: 4rem;
+    
 }
 
 #board-container {

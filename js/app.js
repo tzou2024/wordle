@@ -12,6 +12,12 @@ const stats = document.getElementById("stats")
 const reset = document.getElementById("reset")
 const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
+const slideandstart = document.getElementById("slideandstart")
+const slidey = document.getElementById("slidey")
+
+
+
+
 let word
 
 let timestart = 30;
@@ -27,6 +33,12 @@ let scores = {
     p1_score: 0,
     p2_score: 0,
     p1_turn: true
+}
+
+slidey.oninput = function(){
+    lettercount = this.value 
+    document.documentElement.style
+    .setProperty('--main-setup', `repeat(${lettercount}, 1fr)`);
 }
 
 function onWordCatchFailure(){
@@ -78,7 +90,7 @@ function generateBoxes() {
         box.setAttribute('id',`${i}`)
         board.appendChild(box)
     }
-    startGameButton.style.display = "none"
+    slideandstart.style.display = "none"
     container.style.height = "100%"
 }
 const keys = [
@@ -342,7 +354,7 @@ function gameControl(event, keyLabel){
             break
             
         default:
-            if(element > 4){
+            if(element > lettercount - 1){
                 break
             }
             else{

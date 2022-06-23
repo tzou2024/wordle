@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!<![endif]-->
 <html>
     <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,10 +63,15 @@
                 <h1 id="title">Wordle</h1>
 
             </div>
-
-
-                <h2 id="start-game-button">Start Game</h2>
+            <div id="slideandstart">
+                <h2 style="margin-bottom: 20px;">Letter Count</h2>
+                <output>3</output>
+                <input type="range" value="5" min="3" max="7" id="slidey"oninput="this.nextElementSibling.value = this.value">
+                <output>7</output>
+                    <h2 id="start-game-button">Start Game</h2>
+                </div>
             </div>
+           
             <div id="timeycontainer">
                 <h2 id="timeface">timer</h2>
             </div>
