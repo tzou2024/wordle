@@ -51,7 +51,7 @@ slidey.oninput = function(){
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
     enterDelayflag = false
-    backspaceDelayflag = false
+    backspaceDelayflag = false 
     alert("not a word!")
 }
 
