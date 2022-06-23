@@ -1,6 +1,3 @@
-A readme.md file with explanations of the technologies used, the approach taken, installation instructions, unsolved problems, etc.
-
-
 # Wordle
 This is my version of wordle using html, css. and vanilla javascript! (With a few twists)
 
