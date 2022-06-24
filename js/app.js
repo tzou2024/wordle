@@ -24,6 +24,7 @@ const key = config.XRapidAPIKey
 let word
 let timeInit = 20;
 let enterDelayflag = false
+let backspaceDelayflag = false
 
 let time = timeInit;
 let timeyflag = false;
@@ -49,6 +50,8 @@ slidey.oninput = function(){
 
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
+    enterDelayflag = false
+    backspaceDelayflag = false 
     alert("not a word!")
 }
 
@@ -221,6 +224,8 @@ function collectGuess(){
 }
 
 function notEnoughLetters(){
+    backspaceDelayflag = false
+    enterDelayflag = false
     alert("Not enough letters")
 }
 
@@ -268,6 +273,10 @@ function compareWords(guess){
     }else{
     let parsedguess = guess.word.toUpperCase()
     let checkcorrect = 0;
+    enterDelayflag = true
+    setTimeout(()=>{
+        enterDelayflag = false
+    }, (parsedguess.length+1) * 520)
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
@@ -297,12 +306,14 @@ function compareWords(guess){
             scores.p2_score = scores.p2_score + 1
         }
         //resetBoard()
-        row = guessCount + 1
+        setTimeout(()=>{row = guessCount + 1}, (parsedguess.length+1) * 520)
+        
         scores.p1_turn = !(scores.p1_turn)
         clearInterval(intervalCount)
     }
 
     scores.p1_turn = !(scores.p1_turn)
+    setTimeout(()=>{backspaceDelayflag = false}, (parsedguess.length+1) * 520)
     setTimeout(updatePlayer,(parsedguess.length+1) * 520)
     ++row
     setTimeout(()=>{time = timeInit},(parsedguess.length+1) * 520)
@@ -354,20 +365,20 @@ function gameControl(event, keyLabel){
     //console.log(currKey)
     switch(keyLabel){
         case "BACK":
-            if(element > 0){element = element - 1}
+            if (!backspaceDelayflag){
+                if(element > 0){element = element - 1}
             currKey = document.getElementById(row * lettercount + element)
             currKey.innerText = ""
             currKey.style.borderColor = "rgb(160, 160, 167)"
+            }
             //console.log("AFTER", element)
             break
         case "ENTER":
             if(!enterDelayflag){
+                backspaceDelayflag = true
                 enterDelayflag = true
                 let guess = collectGuess()
                 checkWord(guess)
-                setTimeout(()=>{
-                    enterDelayflag = false
-                }, 1000)
             }
             
             break
@@ -377,10 +388,13 @@ function gameControl(event, keyLabel){
                 break
             }
             else{
-            currKey = document.getElementById(row * lettercount + element)
+                if(!backspaceDelayflag){
+                    currKey = document.getElementById(row * lettercount + element)
             currKey.style.borderColor = "black"
             currKey.innerText = keyLabel
             element = element + 1
+                }
+            
             }
            // console.log("AFTER", element)
     }
