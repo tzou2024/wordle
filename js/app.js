@@ -473,8 +473,11 @@ startGameButton.addEventListener('click',
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
     infoContainer.style.display = "none"
+    if(startflag){
     lightning.style.display = "inline-block"
     reset.style.display = "inline-block"
+    }
+    
     if(!startflag){
         slideandstart.style.display = "block"
     }
