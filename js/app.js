@@ -16,6 +16,7 @@ const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
 const slideandstart = document.getElementById("slideandstart")
 const slidey = document.getElementById("slidey")
+const alertBox = document.getElementById("alertbox")
 const key = config.XRapidAPIKey
 
 
@@ -48,13 +49,20 @@ slidey.oninput = function(){
     .setProperty('--main-setup', `repeat(${lettercount}, 1fr)`);
 }
 
+
+function message(input){
+    alertBox.innerText = input
+    setTimeout(()=>{
+        alertBox.innerText = " "
+    }, 1200)
+}
+
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
     enterDelayflag = false
     backspaceDelayflag = false 
-    alert("not a word!")
+    message("Not in Word Bank!")
 }
-
 
 function generateWord() {
     const options = {
@@ -226,7 +234,7 @@ function collectGuess(){
 function notEnoughLetters(){
     backspaceDelayflag = false
     enterDelayflag = false
-    alert("Not enough letters")
+    message("Not Enough Letters!")
 }
 
 function colorin(element,color){
@@ -322,7 +330,7 @@ function compareWords(guess){
         
         setTimeout(()=>{
             stopCountdown()
-            alert("Round Over! Reset")
+            message("Round Over! Click Reset")
         },(parsedguess.length+1) * 310)
     }
 }
@@ -358,8 +366,8 @@ function checkWord(guess){
 function gameControl(event, keyLabel){
 
     let currKey
-    if (row > guessCount){
-        alert("it's over, click reset icon to keep playing")
+    if (row >= guessCount){
+        message("It's Over! Reset to Keep Playing")
         return 0
     }
     //console.log(currKey)
@@ -415,6 +423,8 @@ startGameButton.addEventListener('click',
      infoContainer.style.display = "none"
      timeyContainer.style.display = "none"
      slideandstart.style.display = "none"
+     lightning.style.display = "none"
+     reset.style.display = "none"
      
 
      
@@ -437,7 +447,8 @@ startGameButton.addEventListener('click',
     infoContainer.style.display = "block"
     timeyContainer.style.display = "none"
     slideandstart.style.display = "none"
-    
+    lightning.style.display = "none"
+    reset.style.display = "none"
 
     
     let oneScore = document.getElementById("oneScore")
@@ -460,6 +471,8 @@ startGameButton.addEventListener('click',
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
     infoContainer.style.display = "none"
+    lightning.style.display = "inline-block"
+    reset.style.display = "inline-block"
     if(!startflag){
         slideandstart.style.display = "block"
     }
@@ -495,7 +508,7 @@ startGameButton.addEventListener('click',
     document.getElementById("timeface").innerText = `time: ${time}`
      
      if(time == 0){
-         alert("tooslow!")
+         message("Too Slow!")
          scores.p1_turn = !scores.p1_turn 
         updatePlayer()
         time = timeInit
