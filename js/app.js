@@ -16,6 +16,7 @@ const lightning = document.getElementById("lightning")
 const timeyContainer = document.getElementById("timeycontainer")
 const slideandstart = document.getElementById("slideandstart")
 const slidey = document.getElementById("slidey")
+const alertBox = document.getElementById("alertbox")
 const key = config.XRapidAPIKey
 
 
@@ -48,13 +49,20 @@ slidey.oninput = function(){
     .setProperty('--main-setup', `repeat(${lettercount}, 1fr)`);
 }
 
+
+function message(input){
+    alertBox.innerText = input
+    setTimeout(()=>{
+        alertBox.innerText = " "
+    }, 1200)
+}
+
 function onWordCatchFailure(){
     console.log("wordGeneratorError")
     enterDelayflag = false
     backspaceDelayflag = false 
-    alert("not a word!")
+    message("Not in Word Bank!")
 }
-
 
 function generateWord() {
     const options = {
@@ -226,7 +234,7 @@ function collectGuess(){
 function notEnoughLetters(){
     backspaceDelayflag = false
     enterDelayflag = false
-    alert("Not enough letters")
+    message("Not Enough Letters!")
 }
 
 function colorin(element,color){
@@ -276,24 +284,24 @@ function compareWords(guess){
     enterDelayflag = true
     setTimeout(()=>{
         enterDelayflag = false
-    }, (parsedguess.length+1) * 520)
+    }, (parsedguess.length+1) * 310)
     for(let i=0;i<parsedguess.length;i++){
         //console.log(guess[i],word[i])
         if(parsedguess[i] == word[i]){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            setTimeout(colorin,(i+1) * 500,checkingKey,"rgb(106,170,100)")
+            setTimeout(colorin,(i+1) * 300,checkingKey,"rgb(106,170,100)")
             checkcorrect = checkcorrect + 1
             
 
         }
         else if(word.split("").includes(parsedguess[i])){
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(201,180,89)")
+            setTimeout(colorin,(i+1)*300,checkingKey, "rgb(201,180,89)")
            
         }
         else{
             let checkingKey = document.getElementById(`${row * lettercount + i}`)
-            setTimeout(colorin,(i+1)*500,checkingKey, "rgb(120,124,126)")
+            setTimeout(colorin,(i+1)*300,checkingKey, "rgb(120,124,126)")
             
         }
     }
@@ -306,24 +314,24 @@ function compareWords(guess){
             scores.p2_score = scores.p2_score + 1
         }
         //resetBoard()
-        setTimeout(()=>{row = guessCount + 1}, (parsedguess.length+1) * 520)
+        setTimeout(()=>{row = guessCount + 1}, (parsedguess.length+1) * 310)
         
         scores.p1_turn = !(scores.p1_turn)
         clearInterval(intervalCount)
     }
 
     scores.p1_turn = !(scores.p1_turn)
-    setTimeout(()=>{backspaceDelayflag = false}, (parsedguess.length+1) * 520)
-    setTimeout(updatePlayer,(parsedguess.length+1) * 520)
+    setTimeout(()=>{backspaceDelayflag = false}, (parsedguess.length+1) * 310)
+    setTimeout(updatePlayer,(parsedguess.length+1) * 310)
     ++row
-    setTimeout(()=>{time = timeInit},(parsedguess.length+1) * 520)
+    setTimeout(()=>{time = timeInit},(parsedguess.length+1) * 310)
     element = 0
     if(row >= guessCount){
         
         setTimeout(()=>{
             stopCountdown()
-            alert("Round Over! Reset")
-        },(parsedguess.length+1) * 520)
+            message("Round Over! Click Reset")
+        },(parsedguess.length+1) * 310)
     }
 }
     
@@ -358,8 +366,8 @@ function checkWord(guess){
 function gameControl(event, keyLabel){
 
     let currKey
-    if (row > guessCount){
-        alert("it's over, click reset icon to keep playing")
+    if (row >= guessCount){
+        message("It's Over! Reset to Keep Playing")
         return 0
     }
     //console.log(currKey)
@@ -415,6 +423,8 @@ startGameButton.addEventListener('click',
      infoContainer.style.display = "none"
      timeyContainer.style.display = "none"
      slideandstart.style.display = "none"
+     lightning.style.display = "none"
+     reset.style.display = "none"
      
 
      
@@ -437,7 +447,8 @@ startGameButton.addEventListener('click',
     infoContainer.style.display = "block"
     timeyContainer.style.display = "none"
     slideandstart.style.display = "none"
-    
+    lightning.style.display = "none"
+    reset.style.display = "none"
 
     
     let oneScore = document.getElementById("oneScore")
@@ -460,6 +471,8 @@ startGameButton.addEventListener('click',
     titleContainer.style.display = "block"
     keyboardContianer.style.display = "block"
     infoContainer.style.display = "none"
+    lightning.style.display = "inline-block"
+    reset.style.display = "inline-block"
     if(!startflag){
         slideandstart.style.display = "block"
     }
@@ -495,7 +508,7 @@ startGameButton.addEventListener('click',
     document.getElementById("timeface").innerText = `time: ${time}`
      
      if(time == 0){
-         alert("tooslow!")
+         message("Too Slow!")
          scores.p1_turn = !scores.p1_turn 
         updatePlayer()
         time = timeInit
