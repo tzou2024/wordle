@@ -309,9 +309,11 @@ function compareWords(guess){
     if (checkcorrect == parsedguess.length){
         if(scores.p1_turn){
             scores.p1_score = scores.p1_score + 1
+            message("Good Job Player 1!")
         }
         else{
             scores.p2_score = scores.p2_score + 1
+            message("Good Job Player 2!")
         }
         //resetBoard()
         setTimeout(()=>{row = guessCount + 1}, (parsedguess.length+1) * 310)
